@@ -9,6 +9,22 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+
+    /**
+     * @param $items
+     * @return mixed
+     */
+    public function buildTree($items)
+    {
+        $grouped = $items->groupBy('parent_id');
+        foreach ($items as $item) {
+            if ($grouped->has($item->id)) {
+                $item->children = $grouped[$item->id];
+            }
+        }
+        return $items->where('parent_id', null);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +32,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        return new CommentsResource(Comment::paginate());
+        return new CommentsResource($this->buildTree(Comment::paginate()));
     }
 
     /**

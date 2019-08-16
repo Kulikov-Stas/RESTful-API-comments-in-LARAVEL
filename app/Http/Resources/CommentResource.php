@@ -27,6 +27,7 @@ class CommentResource extends JsonResource
                 'self' => route('comments.show', ['comment' => $this->id]),
                 'parent' => route('comments.show', ['comment' => $this->parent_id]),
             ],
+            'children' => $this->children
         ];
     }
 }

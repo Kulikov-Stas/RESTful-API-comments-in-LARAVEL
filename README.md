@@ -182,6 +182,47 @@ public function delete(Comment $comment)
 - кидаем Postman delete [delete](https://villa-pinia.com/wp-content/uploads/design-library/delete.jpg)
 - удаление проходит успешно [delete success](https://villa-pinia.com/wp-content/uploads/design-library/delete-success.jpg)
 
+## Неограниченный уровень вложенности
+- в модель добавляем
+```bash
+public function children()
+    {
+        return $this->hasMany('App\Comment', 'parent_id');
+    }
+```
+- в контроллере
+```bash
+    /**
+     * @param $items
+     * @return mixed
+     */
+    public function buildTree($items)
+    {
+        $grouped = $items->groupBy('parent_id');
+        foreach ($items as $item) {
+            if ($grouped->has($item->id)) {
+                $item->children = $grouped[$item->id];
+            }
+        }
+        return $items->where('parent_id', null);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return new CommentsResource($this->buildTree(Comment::paginate()));
+    }
+
+```
+- в ресурс
+```bash
+'children' => $this->children
+```
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 

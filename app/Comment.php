@@ -24,4 +24,9 @@ class Comment extends Model
         'parent_id'
     ];
 
+    public function children()
+    {
+        return $this->hasMany('App\Comment', 'parent_id');
+    }
+
 }
