@@ -37,7 +37,7 @@ class CommentsTest extends TestCase
             'text' => 'Lorem Ipsum'
         ];
 
-        $response = $this->json('PUT', '/api/articles/' . $comment->id, $payload)
+        $response = $this->json('PUT', '/api/comments/' . $comment->id, $payload)
             ->assertStatus(200)
             ->assertJson([
                 'id' => 1,
@@ -47,7 +47,7 @@ class CommentsTest extends TestCase
             ]);
     }
 
-    public function testsArtilcesAreDeletedCorrectly()
+    public function testsCommentsAreDeletedCorrectly()
     {
         $comment = factory(Comment::class)->create([
             'name' => 'Luk',
