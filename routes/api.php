@@ -21,3 +21,7 @@ Route::resource('comments', 'CommentController');
 Route::post('comments', 'CommentController@store');
 Route::put('comments/{comment}', 'CommentController@update');
 Route::delete('comments/{comment}', 'CommentController@delete');
+
+Route::get('comments/{comment}/author', 'CommentController@author');
+Route::resource('comments/authors', 'AuthorController@show');
+

@@ -222,6 +222,12 @@ public function children()
 ```bash
 'children' => $this->children
 ```
+- php artisan make:migration edit_comments_table
+```bash
+        Schema::table('comments', function (Blueprint $table) {
+            $table->foreign('author_id')->references('id')->on('users');
+        });
+```
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
