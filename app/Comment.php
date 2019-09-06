@@ -22,7 +22,9 @@ class Comment extends Model
         'name',
         'email',
         'text',
-        'parent_id'
+        'parent_id',
+        'author_id'
+
     ];
 
     /**

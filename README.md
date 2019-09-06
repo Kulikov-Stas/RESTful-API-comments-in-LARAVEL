@@ -192,29 +192,9 @@ public function children()
 ```
 - в контроллере
 ```bash
-    /**
-     * @param $items
-     * @return mixed
-     */
-    public function buildTree($items)
+public function index()
     {
-        $grouped = $items->groupBy('parent_id');
-        foreach ($items as $item) {
-            if ($grouped->has($item->id)) {
-                $item->children = $grouped[$item->id];
-            }
-        }
-        return $items->where('parent_id', null);
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return new CommentsResource($this->buildTree(Comment::paginate()));
+        return new CommentsResource(Comment::with(['author', 'children'])->paginate());
     }
 
 ```
